@@ -1,5 +1,4 @@
 import 'dart:io';
-
 class Train {
   String number;
   String name;
