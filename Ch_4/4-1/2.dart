@@ -1,6 +1,6 @@
 void main(List<String> args) {
   List number = [1, 2, 3, 4, 5, 1, 3, 4];
-  List name = ["darshan", "hadiyal", "hadiyal", "darshan"];
+  List name = ["smit", "chitroda", "smit", "chitroda"];
 
   print("$number");
   print("$name");
