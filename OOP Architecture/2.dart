@@ -1,276 +1,129 @@
 import 'dart:io';
 
-class products {
-  dynamic iphone_15 = 198900;
-  dynamic onepluse_12 = 69999;
-  dynamic samgsung_24_ultra = 159999;
-  dynamic pixcel_8_Pro = 117800;
+class Product {
+  late String name;
+  late int price;
+  late int quantity;
+
+  Product(this.name, this.price, this.quantity);
 }
 
-class Customers extends products {
+class Customer {
   late int id;
   late String name;
-  late int number;
-  List<products> cart = [];
+  late String contact;
+  List<Product> cart = [];
 
-  void setCustomerData() {
-    stdout.write("Enter customer Id : ");
-    id = int.parse(stdin.readLineSync() ?? "0");
-    stdout.write("Enter customer name : ");
-    name = stdin.readLineSync() ?? "0";
-    stdout.write("Enter customer number : ");
-    number = int.parse(stdin.readLineSync() ?? "0");
+  Customer(this.id, this.name, this.contact);
+
+  void addToCart(Product product) {
+    cart.add(product);
   }
 
-  void verities() {
-    do {
-      print("1. Mobiles");
-      print("2. Drink");
-      print("3. Electronics");
-      print("4. Home & furniture");
-      stdout.write("Enter your choice : ");
-      int choice = int.parse(stdin.readLineSync() ?? "6");
-
-      switch (choice) {
-        case 1:
-          mobile();
-          break;
-
-        case 2:
-          drink();
-      }
-    } while (choice != 0);
+  void showCart() {
+    print("\nCustomer ID: $id");
+    print("Customer Name: $name");
+    print("Customer Contact: $contact");
+    print("\nCart:");
+    cart.forEach(
+      (product) {
+        print(
+            "Product: ${product.name}, Quantity: ${product.quantity}, Price: ${product.price}");
+      },
+    );
   }
 
-  void mobile() {
-    print("1. Apple 15 Pro Max");
-    print("2. One Pluse 12");
-    print("3. Samgung 24 Ultra");
-    print("4. Pixcel 8 pro");
-    stdout.write("Enter your choice : ");
-    int choice = int.parse(stdin.readLineSync() ?? "5");
-    do {
-      switch (choice) {
-        case 1:
-          print("\n\nApple iPhone 15 Pro Max (1 TB) - Natural Titanium");
-          print("Price ₹1,98,900");
-          print("\n1 for add in 'Add to cart'");
-          print("0 for Exit");
-          stdout.write("Enter your choice : ");
-          choice = int.parse(stdin.readLineSync() ?? "0");
-
-          if (choice == 1) {
-            stdout.write("Enter quenty of Iphone 15 : ");
-            choice = int.parse(stdin.readLineSync() ?? "0");
-            cart.add(iphone_15);
-          } else {
-            stdout.write("exit");
-          }
-          break;
-        case 2:
-          print("\n\nOnePlus 12 (Flowy Emerald, 16 GB RAM, 512GB)");
-          print("Price ₹69,999");
-          print("\n1 for add in 'Add to cart'");
-          print("0 for Exit");
-          stdout.write("Enter your choice : ");
-          choice = int.parse(stdin.readLineSync() ?? "0");
-
-          if (choice == 1) {
-            stdout.write("Enter quenty of Iphone 15 : ");
-            choice = int.parse(stdin.readLineSync() ?? "0");
-            cart.add(onepluse_12);
-          } else {
-            stdout.write("exit");
-          }
-          break;
-        case 3:
-          print(
-              "\n\nSamsung Galaxy S24 Ultra 5G (Titanium Gray, 12GB, 1TB Storage)");
-          print("Price ₹1,59,999");
-
-          print("\n1 for add in 'Add to cart'");
-          print("0 for Exit");
-          stdout.write("Enter your choice : ");
-          choice = int.parse(stdin.readLineSync() ?? "0");
-
-          if (choice == 1) {
-            stdout.write("Enter quenty of Iphone 15 : ");
-            choice = int.parse(stdin.readLineSync() ?? "0");
-            cart.add(samgsung_24_ultra);
-          } else {
-            stdout.write("exit");
-          }
-          break;
-        case 4:
-          print("\n\nGoogle Pixel 8 pro 5G (Obsidian 12GB Ram,256GB Storage)");
-          print("Price ₹1,17,800");
-
-          print("\n1 for add in 'Add to cart'");
-          print("0 for Exit");
-          stdout.write("Enter your choice : ");
-          choice = int.parse(stdin.readLineSync() ?? "0");
-
-          if (choice == 1) {
-            stdout.write("Enter quenty of Iphone 15 : ");
-            choice = int.parse(stdin.readLineSync() ?? "0");
-            cart.add(pixcel_8_Pro);
-          } else {
-            stdout.write("exit");
-          }
-          break;
-        default:
-          print("Invalid input !!");
-          print("Try again !");
-
-          break;
-      }
-    } while (choice != 0);
+  int calculateTotal() {
+    int total = 0;
+    cart.forEach(
+      (product) {
+        total += product.price * product.quantity;
+      },
+    );
+    return total;
   }
 
-  void drink() {
-    print("1. Chai");
-    print("2. Coffee");
-    print("3. Lassi");
-    stdout.write("Enter your choice : ");
-    int choice = int.parse(stdin.readLineSync() ?? "4");
-    // switch
+  int calculateDiscount(int total) {
+    if (total >= 500 && total < 1500) {
+      return (total * 0.1).toInt();
+    } else if (total >= 1500 && total < 3500) {
+      return (total * 0.2).toInt();
+    } else if (total >= 3500 && total < 6500) {
+      return (total * 0.25).toInt();
+    } else if (total >= 6500) {
+      return (total * 0.3).toInt();
+    } else {
+      return 0;
+    }
+  }
+
+  int calculateDiscountedAmount(int total, int discount) {
+    return total - discount;
+  }
+
+  void printInvoice() {
+    int total = calculateTotal();
+    int discount = calculateDiscount(total);
+    int discountedAmount = calculateDiscountedAmount(total, discount);
+    print("\nTotal Amount: $total");
+    print("Discount: $discount");
+    print("Discounted Amount: $discountedAmount");
   }
 }
-import 'dart:io';
 
-class products {
-  dynamic iphone_15 = 198900;
-  dynamic onepluse_12 = 69999;
-  dynamic samgsung_24_ultra = 159999;
-  dynamic pixcel_8_Pro = 117800;
-}
+void main() {
+  List<Customer> customers = [];
+  int customerId = 1;
 
-class Customers extends products {
-  late int id;
-  late String name;
-  late int number;
-  List<products> cart = [];
+  while (true) {
+    stdout.write("\nEnter customer name (or 'exit' to quit): ");
+    String? name = stdin.readLineSync();
 
-  void setCustomerData() {
-    stdout.write("Enter customer Id : ");
-    id = int.parse(stdin.readLineSync() ?? "0");
-    stdout.write("Enter customer name : ");
-    name = stdin.readLineSync() ?? "0";
-    stdout.write("Enter customer number : ");
-    number = int.parse(stdin.readLineSync() ?? "0");
-  }
+    if (name == 'exit') break;
 
-  void verities() {
-    do {
+    stdout.write("Enter customer contact number: ");
+    String? contact = stdin.readLineSync();
+
+    Customer customer = Customer(customerId, name ?? "", contact ?? "");
+    customerId++;
+
+    while (true) {
+      print("\nCategories:");
       print("1. Mobiles");
-      print("2. Drink");
-      print("3. Electronics");
-      print("4. Home & furniture");
-      stdout.write("Enter your choice : ");
-      int choice = int.parse(stdin.readLineSync() ?? "6");
+      print("2. Drinks");
+      print("3. Food");
+      print("0. Checkout");
+      stdout.write("Enter your choice: ");
+      int? choice = int.tryParse(stdin.readLineSync() ?? "");
+
+      if (choice == 0) break;
 
       switch (choice) {
         case 1:
-          mobile();
-          break;
-
-        case 2:
-          drink();
-      }
-    } while (choice != 0);
-  }
-
-  void mobile() {
-    print("1. Apple 15 Pro Max");
-    print("2. One Pluse 12");
-    print("3. Samgung 24 Ultra");
-    print("4. Pixcel 8 pro");
-    stdout.write("Enter your choice : ");
-    int choice = int.parse(stdin.readLineSync() ?? "5");
-    do {
-      switch (choice) {
-        case 1:
-          print("\n\nApple iPhone 15 Pro Max (1 TB) - Natural Titanium");
-          print("Price ₹1,98,900");
-          print("\n1 for add in 'Add to cart'");
-          print("0 for Exit");
-          stdout.write("Enter your choice : ");
-          choice = int.parse(stdin.readLineSync() ?? "0");
-
-          if (choice == 1) {
-            stdout.write("Enter quenty of Iphone 15 : ");
-            choice = int.parse(stdin.readLineSync() ?? "0");
-            cart.add(iphone_15);
-          } else {
-            stdout.write("exit");
-          }
+          customer.addToCart(
+            Product("Apple iPhone 15 Pro Max", 198900, 1),
+          );
           break;
         case 2:
-          print("\n\nOnePlus 12 (Flowy Emerald, 16 GB RAM, 512GB)");
-          print("Price ₹69,999");
-          print("\n1 for add in 'Add to cart'");
-          print("0 for Exit");
-          stdout.write("Enter your choice : ");
-          choice = int.parse(stdin.readLineSync() ?? "0");
-
-          if (choice == 1) {
-            stdout.write("Enter quenty of Iphone 15 : ");
-            choice = int.parse(stdin.readLineSync() ?? "0");
-            cart.add(onepluse_12);
-          } else {
-            stdout.write("exit");
-          }
+          customer.addToCart(
+            Product("Coffee", 50, 2),
+          );
           break;
         case 3:
-          print(
-              "\n\nSamsung Galaxy S24 Ultra 5G (Titanium Gray, 12GB, 1TB Storage)");
-          print("Price ₹1,59,999");
-
-          print("\n1 for add in 'Add to cart'");
-          print("0 for Exit");
-          stdout.write("Enter your choice : ");
-          choice = int.parse(stdin.readLineSync() ?? "0");
-
-          if (choice == 1) {
-            stdout.write("Enter quenty of Iphone 15 : ");
-            choice = int.parse(stdin.readLineSync() ?? "0");
-            cart.add(samgsung_24_ultra);
-          } else {
-            stdout.write("exit");
-          }
-          break;
-        case 4:
-          print("\n\nGoogle Pixel 8 pro 5G (Obsidian 12GB Ram,256GB Storage)");
-          print("Price ₹1,17,800");
-
-          print("\n1 for add in 'Add to cart'");
-          print("0 for Exit");
-          stdout.write("Enter your choice : ");
-          choice = int.parse(stdin.readLineSync() ?? "0");
-
-          if (choice == 1) {
-            stdout.write("Enter quenty of Iphone 15 : ");
-            choice = int.parse(stdin.readLineSync() ?? "0");
-            cart.add(pixcel_8_Pro);
-          } else {
-            stdout.write("exit");
-          }
+          customer.addToCart(
+            Product("Pizza", 150, 2),
+          );
           break;
         default:
-          print("Invalid input !!");
-          print("Try again !");
-
-          break;
+          print("Invalid choice!");
       }
-    } while (choice != 0);
+    }
+
+    customers.add(customer);
   }
 
-  void drink() {
-    print("1. Chai");
-    print("2. Coffee");
-    print("3. Lassi");
-    stdout.write("Enter your choice : ");
-    int choice = int.parse(stdin.readLineSync() ?? "4");
-    // switch
+  for (var customer in customers) {
+    customer.showCart();
+    customer.printInvoice();
   }
 }
